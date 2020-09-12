@@ -1,0 +1,26 @@
+{
+  "name": "grafos",
+  "version": "1.0.0",
+  "description": "a graph algorithms toolkit",
+  "main": "index.js",
+  "scripts": {
+    "build": "rollup index.js --file dist/bundle.min.js --format umd --name 'myBundle' --compact"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ian021/grafos.git"
+  },
+  "keywords": [
+    "graph"
+  ],
+  "author": "Ian Collares",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Ian021/grafos/issues"
+  },
+  "homepage": "https://github.com/Ian021/grafos#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "rollup": "^2.26.11"
+  }
+}
