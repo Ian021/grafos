@@ -4,13 +4,12 @@ test("add node", () => {
   const graph = new Graph();
 
   const node1 = graph.addNode({ x: 1 });
-  expect(node1.info()).toStrictEqual({ id: "x1", location: { x: 1 } });
+  expect(node1.info().id).toBe("x1");
+  expect(node1.info().location).toStrictEqual({ x: 1 });
 
   const node2 = graph.addNode({ a: 21, b: 95 });
-  expect(node2.info()).toStrictEqual({
-    id: "a21b95",
-    location: { a: 21, b: 95 }
-  });
+  expect(node2.info().id).toBe("a21b95");
+  expect(node2.info().location).toStrictEqual({ a: 21, b: 95 });
 });
 
 test("add existing node fails", () => {
