@@ -66,3 +66,32 @@ test("clear all nodes", () => {
   expect(graph.retrieveNodeById(node2.id)).toBeUndefined();
   expect(graph.retrieveNodeById(node3.id)).toBeUndefined();
 });
+
+test("add node with connections", () => {
+  const graph = new Graph();
+
+  const node1 = graph.addNode({ x: 1 }, [{ x: 2 }, { x: 0 }]);
+  const node2 = graph.retrieveNodeByLocation({ x: 2 });
+  const node3 = graph.retrieveNodeByLocation({ x: 0 });
+
+  expect(node1.retrieveConnections()).toContain(node2.id);
+  expect(node1.retrieveConnections()).toContain(node3.id);
+
+  expect(node2).toBeDefined();
+  expect(node3).toBeDefined();
+});
+
+test("add or update node with connections", () => {
+  const graph = new Graph();
+
+  node1 = graph.addNode({ x: 1 });
+  node1 = graph.addOrUpdateNode({ x: 1 }, [{ x: 2 }, { x: 0 }]);
+  node2 = graph.retrieveNodeByLocation({ x: 2 });
+  node3 = graph.retrieveNodeByLocation({ x: 0 });
+
+  expect(node1.retrieveConnections()).toContain(node2.id);
+  expect(node1.retrieveConnections()).toContain(node3.id);
+
+  expect(node2).toBeDefined();
+  expect(node3).toBeDefined();
+});

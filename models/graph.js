@@ -4,13 +4,35 @@ class Graph {
   constructor() {
     this.nodes = {};
   }
-  addNode(location) {
+  addNode(location, connections) {
     const id = this.generateIdForLocation(location);
     if (!this.nodes[id]) {
-      const newNode = new Node(id, location);
-      this.nodes[newNode] = newNode;
-      return newNode;
+      let node = new Node(id, location);
+      this.nodes[node] = node;
+      if (connections) {
+        node = this.addConnections(node, connections);
+      }
+      return node;
     }
+  }
+  addOrUpdateNode(location, connections) {
+    const id = this.generateIdForLocation(location);
+    let node = this.nodes[id];
+    if (!node) {
+      node = new Node(id, location);
+      this.nodes[node] = node;
+    }
+    if (connections) {
+      node = this.addConnections(node, connections);
+    }
+    return node;
+  }
+  addConnections(node, connections) {
+    connections.forEach(connectedNodeLocation => {
+      const connectedNode = this.addNode(connectedNodeLocation);
+      node.addOneWayConnection(connectedNode);
+    });
+    return node;
   }
   clear() {
     this.nodes = {};
