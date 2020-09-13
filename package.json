@@ -4,6 +4,7 @@
   "description": "a graph algorithms toolkit",
   "main": "index.js",
   "scripts": {
+    "test": "jest",
     "build": "rollup index.js --file dist/bundle.min.js --format umd --name 'myBundle' --compact"
   },
   "repository": {
@@ -21,6 +22,7 @@
   "homepage": "https://github.com/Ian021/grafos#readme",
   "dependencies": {},
   "devDependencies": {
+    "jest": "^26.4.2",
     "rollup": "^2.26.11"
   }
 }
