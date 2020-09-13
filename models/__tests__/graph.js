@@ -69,29 +69,45 @@ test("clear all nodes", () => {
 
 test("add node with connections", () => {
   const graph = new Graph();
+  const effort = 5;
+  const defaultEffort = 2;
+  graph.setDefaultEffort(defaultEffort);
 
-  const node1 = graph.addNode({ x: 1 }, [{ x: 2 }, { x: 0 }]);
+  const node1 = graph.addNode({ x: 1 }, [
+    { location: { x: 2 }, effort },
+    { location: { x: 0 } }
+  ]);
   const node2 = graph.retrieveNodeByLocation({ x: 2 });
   const node3 = graph.retrieveNodeByLocation({ x: 0 });
 
-  expect(node1.retrieveConnections()).toContain(node2.id);
-  expect(node1.retrieveConnections()).toContain(node3.id);
-
   expect(node2).toBeDefined();
   expect(node3).toBeDefined();
+
+  expect(node1.retrieveConnections()[0].id).toBe(node2.id);
+  expect(node1.retrieveConnections()[0].effort).toBe(effort);
+  expect(node1.retrieveConnections()[1].id).toBe(node3.id);
+  expect(node1.retrieveConnections()[1].effort).toBe(defaultEffort);
 });
 
 test("add or update node with connections", () => {
   const graph = new Graph();
+  const effort = 12;
+  const defaultEffort = 3;
+  graph.setDefaultEffort(defaultEffort);
 
   node1 = graph.addNode({ x: 1 });
-  node1 = graph.addOrUpdateNode({ x: 1 }, [{ x: 2 }, { x: 0 }]);
+  node1 = graph.addOrUpdateNode({ x: 1 }, [
+    { location: { x: 2 } },
+    { location: { x: 0 }, effort }
+  ]);
   node2 = graph.retrieveNodeByLocation({ x: 2 });
   node3 = graph.retrieveNodeByLocation({ x: 0 });
 
-  expect(node1.retrieveConnections()).toContain(node2.id);
-  expect(node1.retrieveConnections()).toContain(node3.id);
-
   expect(node2).toBeDefined();
   expect(node3).toBeDefined();
+
+  expect(node1.retrieveConnections()[0].id).toBe(node2.id);
+  expect(node1.retrieveConnections()[0].effort).toBe(defaultEffort);
+  expect(node1.retrieveConnections()[1].id).toBe(node3.id);
+  expect(node1.retrieveConnections()[1].effort).toBe(effort);
 });

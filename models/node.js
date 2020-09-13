@@ -2,7 +2,8 @@ class Node {
   constructor(id, location) {
     this.id = id;
     this.location = location;
-    this.connections = [];
+    this.connections = {};
+    this.previousNodeId = null;
   }
   toString() {
     return this.id;
@@ -14,15 +15,22 @@ class Node {
     });
     return properties;
   }
-  addOneWayConnection(connectedNode) {
-    this.connections.push(connectedNode.id);
+  addOneWayConnection(connectedNode, effort) {
+    this.connections[connectedNode.id] = {
+      effort: effort ? effort : 1
+    };
   }
-  addTwoWayConnection(connectedNode) {
-    this.connections.push(connectedNode.id);
-    connectedNode.addOneWayConnection(this);
+  addTwoWayConnection(connectedNode, effort1, effort2) {
+    this.addOneWayConnection(connectedNode, effort1);
+    connectedNode.addOneWayConnection(this, effort2);
   }
   retrieveConnections() {
-    return this.connections;
+    return Object.entries(this.connections).map(([key, value]) => {
+      return { id: key, effort: value.effort };
+    });
+  }
+  setPreviousNode(node) {
+    this.previousNodeId = node.id;
   }
 }
 

@@ -3,6 +3,10 @@ const Node = require("./node");
 class Graph {
   constructor() {
     this.nodes = {};
+    this.effort = 1;
+  }
+  setDefaultEffort(effort) {
+    this.effort = effort;
   }
   addNode(location, connections) {
     const id = this.generateIdForLocation(location);
@@ -28,9 +32,12 @@ class Graph {
     return node;
   }
   addConnections(node, connections) {
-    connections.forEach(connectedNodeLocation => {
-      const connectedNode = this.addNode(connectedNodeLocation);
-      node.addOneWayConnection(connectedNode);
+    connections.forEach(connection => {
+      const connectedNode = this.addNode(connection.location);
+      node.addOneWayConnection(
+        connectedNode,
+        connection.effort ? connection.effort : this.effort
+      );
     });
     return node;
   }
